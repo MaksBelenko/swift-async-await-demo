@@ -55,13 +55,13 @@ final class LegacyRequest {
 }
 
 func download() async throws -> String {
-    let request = LegacyRequest()
+    let request = LegacyRequest()                       // one object
     return try await withTaskCancellationHandler {
         try await withCheckedThrowingContinuation { continuation in
-            request.start { continuation.resume(with: $0) }
+            request.start { continuation.resume(with: $0) } // used here
         }
     } onCancel: {
-        request.cancel()
+        request.cancel()                                // and the same one here
     }
 }
 
