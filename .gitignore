@@ -2,4 +2,4 @@
 xcuserdata/
 *.xctimeline
 timeline.xctimeline
-playground.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+**/xcshareddata/IDEWorkspaceChecks.plist
