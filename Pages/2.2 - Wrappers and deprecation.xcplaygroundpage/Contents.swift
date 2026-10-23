@@ -15,6 +15,10 @@ struct User {
     let name: String
 }
 
+// Phase1 / Phase1b / Phase2 enums are just namespaces, so the 3 versions of the same service don't clash
+
+// MARK: - Phase 1 (now)
+// old method untouched
 enum Phase1 {
     final class UserService {
         func fetchUser(id: Int, completion: @escaping (Result<User, Error>) -> Void) {
@@ -25,6 +29,7 @@ enum Phase1 {
     }
 }
 
+// new code only calls this one
 extension Phase1.UserService {
     func fetchUser(id: Int) async throws -> User {
         try await withCheckedThrowingContinuation { continuation in
@@ -33,21 +38,25 @@ extension Phase1.UserService {
     }
 }
 
+// MARK: - Phase 1b (now, if we want warnings already)
 // If the wrapper called the deprecated method we'd get a warning inside the wrapper,
 // so the body moves to a private method
 enum Phase1b {
     final class UserService {
+        // old method, now only forwards
         @available(*, deprecated, renamed: "fetchUser(id:)")
         func fetchUser(id: Int, completion: @escaping (Result<User, Error>) -> Void) {
             _fetchUser(id: id, completion: completion)
         }
 
+        // async wrapper
         func fetchUser(id: Int) async throws -> User {
             try await withCheckedThrowingContinuation { continuation in
                 _fetchUser(id: id) { continuation.resume(with: $0) }
             }
         }
 
+        // original code, just renamed and private
         private func _fetchUser(id: Int, completion: @escaping (Result<User, Error>) -> Void) {
             DispatchQueue.global().asyncAfter(deadline: .now() + 0.2) {
                 completion(.success(User(id: id, name: "Phase 1b user")))
@@ -56,13 +65,16 @@ enum Phase1b {
     }
 }
 
+// MARK: - Phase 2 (later, bulk conversion)
 enum Phase2 {
     final class UserService {
+        // real implementation is async now
         func fetchUser(id: Int) async throws -> User {
             try await Task.sleep(for: .seconds(0.2)) // URLSession.shared.data(for:)
             return User(id: id, name: "Phase 2 user")
         }
 
+        // other way around: closure method is the wrapper, kept only for old call sites
         @available(*, deprecated, renamed: "fetchUser(id:)")
         func fetchUser(id: Int, completion: @escaping (Result<User, Error>) -> Void) {
             Task {
