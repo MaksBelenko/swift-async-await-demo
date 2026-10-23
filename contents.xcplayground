@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playground version='6.0' target-platform='ios' swift-version='5' display-mode='rendered' buildActiveScheme='true' importAppTypes='true'>
+    <pages>
+        <page name='0 - Overview and migration plan'/>
+        <page name='1.1 - Callback hell'/>
+        <page name='1.2 - The same with async-await'/>
+        <page name='2.1 - withCheckedContinuation'/>
+        <page name='2.2 - Wrappers and deprecation'/>
+        <page name='2.3 - Continuation pitfalls'/>
+        <page name='3.1 - Sequential caveat'/>
+        <page name='3.2 - Parallel with async let'/>
+        <page name='3.3 - Parallel with TaskGroup'/>
+        <page name='4.1 - Actors vs classes'/>
+        <page name='4.2 - Actor reentrancy'/>
+        <page name='4.3 - MainActor'/>
+    </pages>
+</playground>

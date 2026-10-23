@@ -1,0 +1,5 @@
+.DS_Store
+xcuserdata/
+*.xctimeline
+timeline.xctimeline
+playground.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
