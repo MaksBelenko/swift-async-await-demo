@@ -113,3 +113,9 @@ Task {
         print("error:", error)
     }
 }
+
+// NOTE: other continuations
+// - withUnsafeContinuation / withUnsafeThrowingContinuation - same API, no runtime checks, only if measured
+// - CheckedContinuation can be stored in a property, for delegates (see 2.3)
+// - AsyncStream / AsyncThrowingStream - callback called many times (progress, location), see 2.3
+// - withTaskCancellationHandler - not a continuation, but needed if the old API can be cancelled
